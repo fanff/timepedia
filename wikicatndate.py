@@ -79,13 +79,15 @@ def fu(searchStr):
     return resDic
 
 if __name__=="__main__":
-    ""
-    ""
 
     for ck in range(1600,1990):
+        try:
+            resDic = fu(str(ck))
+            fileName = "dumpjson/%s.json"%ck
+            with codecs.open(fileName,"w") as out:
+                out.write(json.dumps(resDic,indent=True))
+        except Exception as e:
+            print e
 
-        resDic = fu(str(ck))
-        fileName = "%s.json"%ck
-        with codecs.open(fileName,"w") as out:
-            out.write(json.dumps(resDic,indent=True))
+
 
