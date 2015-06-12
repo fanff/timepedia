@@ -13,8 +13,70 @@ from bs4 import BeautifulSoup as bs
 
 import codecs
 
-def processBirth(res):
+def dumpwiki(): 
+    # dump pages of wikipedia for offline analysis
+    for ck in range(1000,2015):
+        try:
+            res = wikipedia.page(str(ck))
+            res.html()
+
+            fileName = "dumphtml/%s.html"%ck
+            with codecs.open(fileName,"w",encoding="utf-8") as out:
+                txt = res.html()
+                out.write(txt)
+
+            print "dumped %s"%fileName
+        except Exception as e:
+            print "error: ",e
+
+
+def process10(res):
     """
+
+    for pages ~>1000 quite long time ago
+
+    Events 
+        maybe date - text
+        text
+        text 
+    
+    Or:
+
+    Events
+        By place
+            Europe
+                date/text
+            .. 
+        By topic
+            ..
+
+    """
+
+
+def process18(res):
+    """
+
+    """
+
+
+def process19(res):
+    """
+
+    Simple process for pages ~> 1900
+    
+    page is like
+    Events
+        January
+            date - event text (some links ) text .. 
+            date - event ....
+        February
+            date - event ...
+            date 
+                event
+                event
+
+        ..
+
     """
 
     month=res.findNext("h3")
@@ -58,6 +120,14 @@ def processBirth(res):
 
 def fu(searchStr):
     """
+    
+    Return dic with at least : 
+    {
+        events : [ ]
+        births : []
+        deaths : []
+    }
+
     """
 
     res = wikipedia.page(searchStr)
@@ -66,28 +136,20 @@ def fu(searchStr):
     html = res.html()
     soup = bs(html)
     birthres = soup.find("span",{"id":"Births"})
-    birthres = processBirth(birthres)
+    birthres = process19(birthres)
     
     deathres = soup.find("span",{"id":"Deaths"})
-    deathres = processBirth(deathres)
+    deathres = process19(deathres)
 
     eventsres = soup.find("span",{"id":"Events"})
-    eventsres = processBirth(eventsres)
+    eventsres = process19(eventsres)
     resDic = {"births":birthres,"deaths":deathres,"events":eventsres}
 
 
     return resDic
 
+
+
+
 if __name__=="__main__":
-
-    for ck in range(1600,1990):
-        try:
-            resDic = fu(str(ck))
-            fileName = "dumpjson/%s.json"%ck
-            with codecs.open(fileName,"w") as out:
-                out.write(json.dumps(resDic,indent=True))
-        except Exception as e:
-            print e
-
-
-
+    pass
