@@ -59,23 +59,8 @@ def process18(res):
     """
 
 
-def process19(res):
+def fu(res):
     """
-
-    Simple process for pages ~> 1900
-    
-    page is like
-    Events
-        January
-            date - event text (some links ) text .. 
-            date - event ....
-        February
-            date - event ...
-            date 
-                event
-                event
-
-        ..
 
     """
 
@@ -118,7 +103,7 @@ def process19(res):
     return monthList
 
 
-def fu(searchStr):
+def process19(searchStr):
     """
     
     Return dic with at least : 
@@ -127,6 +112,22 @@ def fu(searchStr):
         births : []
         deaths : []
     }
+    
+    Simple process for pages ~> 1900
+    
+    page is like
+    Events
+        January
+            date - event text (some links ) text .. 
+            date - event ....
+        February
+            date - event ...
+            date 
+                event
+                event
+
+        ..
+
 
     """
 
@@ -136,13 +137,13 @@ def fu(searchStr):
     html = res.html()
     soup = bs(html)
     birthres = soup.find("span",{"id":"Births"})
-    birthres = process19(birthres)
+    birthres = fu(birthres)
     
     deathres = soup.find("span",{"id":"Deaths"})
-    deathres = process19(deathres)
+    deathres = fu(deathres)
 
     eventsres = soup.find("span",{"id":"Events"})
-    eventsres = process19(eventsres)
+    eventsres = fu(eventsres)
     resDic = {"births":birthres,"deaths":deathres,"events":eventsres}
 
 
